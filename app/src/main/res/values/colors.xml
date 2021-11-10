@@ -7,4 +7,21 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="whiteGMV">#FFFFFFFF</color>
+    <color name="blackGMV">#000000</color>
+    <color name="redClearGMV">#DF0024</color>
+    <color name="redDarkGMV">#860015</color>
+    <color name="grey1GMV">#E5E5E5</color>
+    <color name="grey2GMV">#CCCCCC</color>
+    <color name="grey3GMV">#999999</color>
+    <color name="grey4GMV">#666666</color>
+    <color name="grey5GMV">#4C4C4C</color>
+    <color name="grey6GMV">#333333</color>
+    <color name="greenGMV">#538135</color>
+    <color name="yellowGMV">#BF9000</color>
+
+
+
+
 </resources>

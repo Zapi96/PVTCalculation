@@ -1,3 +1,31 @@
 <resources>
     <string name="app_name">PVTCalculation</string>
+    <string name="passportTitle">PASSPORT</string>
+    <string name="magicpvtName">magicPVT</string>
+    <string name="configurationButton">CONFIGURATION</string>
+    <string name="load_data">LOAD DATA</string>
+    <string name="download_data">DOWNLOAD DATA</string>
+    <string name="buttonCompute">COMPUTE</string>
+    <string name="observation_file_obs">Observation file (.obs):</string>
+    <string name="navigation_file_nav">Navigation file (.nav):</string>
+    <string name="select_date">Select date:</string>
+    <string name="select_coordinates">Select coordinates</string>
+    <string name="altitude">Altitude:</string>
+    <string name="longitude">Longitude:</string>
+    <string name="latitude">Latitude:</string>
+    <string name="no_data">No data</string>
+
+    <string name="satcount">Satellites: %s</string>
+    <string name="latitude_item">Latitude: %s</string>
+    <string name="longitude_item">Longitude: %s</string>
+    <string name="altitude_item">Altitude: %s</string>
+    <string name="reminder_saved">Position Saved !</string>
+
+    <string name="err_enter_date">Please enter date</string>
+    <string name="err_enter_latitude">Please enter latitude</string>
+    <string name="err_enter_longitude">Please enter longitude</string>
+    <string name="err_enter_altitude">Please enter altitude</string>
+
+
+
 </resources>

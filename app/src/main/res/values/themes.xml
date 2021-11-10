@@ -2,15 +2,33 @@
     <!-- Base application theme. -->
     <style name="Theme.PVTCalculation" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_500</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
-        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorPrimary">@color/redClearGMV</item>
+        <item name="colorPrimaryVariant">@color/redDarkGMV</item>
+        <item name="colorOnPrimary">@color/whiteGMV</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/teal_200</item>
-        <item name="colorSecondaryVariant">@color/teal_700</item>
-        <item name="colorOnSecondary">@color/black</item>
+        <item name="colorSecondary">@color/grey2GMV</item>
+        <item name="colorSecondaryVariant">@color/grey3GMV</item>
+        <item name="colorOnSecondary">@color/blackGMV</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">false</item>
     </style>
+
+    <style name="Theme.PVTCalculation.NoActionBar" >
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <!-- Style for the navigation drawer icon -->
+    <style name="DrawerArrowStyle" parent="ThemeOverlay.AppCompat.ActionBar">
+        <item name="spinBars">true</item>
+        <item name="color">@color/whiteGMV</item>
+        <item name="colorControlNormal">@color/whiteGMV</item>
+
+    </style>
+
+
+
 </resources>

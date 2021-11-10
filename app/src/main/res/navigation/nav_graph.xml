@@ -1,6 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/nav_graph">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_navigation"
+    app:startDestination="@id/welcomeFragment">
 
+
+    <fragment
+        android:id="@+id/welcomeFragment"
+        android:name="com.example.pvtcalculation.WelcomeFragment"
+        android:label="Welcome"
+        android:theme="@style/Theme.PVTCalculation.NoActionBar"
+        tools:layout="@layout/welcome_fragment" >
+        <action
+            android:id="@+id/action_welcomeFragment_to_configurationFragment"
+            app:destination="@id/configurationFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/configurationFragment"
+        android:name="com.example.pvtcalculation.ConfigurationFragment"
+        android:label="Configuration"
+        tools:layout="@layout/configuration_fragment" >
+        <action
+            android:id="@+id/action_configurationFragment_to_configurationLoadFragment"
+            app:destination="@id/configurationLoadFragment" />
+        <action
+            android:id="@+id/action_configurationFragment_to_listPositionsFragment"
+            app:destination="@id/listPositionsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/resultsFragment"
+        android:name="com.example.pvtcalculation.ResultsFragment"
+        android:label="Results"
+        tools:layout="@layout/results_fragment" />
+    <fragment
+        android:id="@+id/configurationLoadFragment"
+        android:name="com.example.pvtcalculation.ConfigurationLoadFragment"
+        android:label="Load data" >
+        <action
+            android:id="@+id/action_configurationLoadFragment_to_resultsFragment"
+            app:destination="@id/resultsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/configurationDownloadFragment"
+        android:name="com.example.pvtcalculation.ConfigurationDownloadFragment"
+        android:label="Download data" >
+        <action
+            android:id="@+id/action_configurationDownloadFragment_to_listPositionsFragment"
+            app:destination="@id/listPositionsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/listPositionsFragment"
+        android:name="com.example.pvtcalculation.positions.positionslist.ListPositionsFragment"
+        android:label="ListPositionsFragment" >
+        <action
+            android:id="@+id/action_listPositionsFragment_to_configurationDownloadFragment"
+            app:destination="@id/configurationDownloadFragment" />
+    </fragment>
 </navigation>
