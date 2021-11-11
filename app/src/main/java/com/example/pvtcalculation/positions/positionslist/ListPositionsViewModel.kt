@@ -1,6 +1,7 @@
 package com.example.pvtcalculation.positions.positionslist
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.pvtcalculation.Above
@@ -39,6 +40,7 @@ class ListPositionsViewModel(app: Application, private val dataSource: PositionD
                         )
                     })
                     positionsList.value = dataList
+                    Log.w("SUCCESS","Hola")
                 }
                 is Result.Error ->
                     showSnackBar.value = result.message

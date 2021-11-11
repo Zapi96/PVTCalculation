@@ -20,27 +20,31 @@
             android:id="@+id/titlePassport"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="100dp"
             android:gravity="center"
             android:text="@string/passportTitle"
             android:textColor="@color/redClearGMV"
             android:textSize="60sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/titleName"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.37" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/titleName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="50dp"
             android:text="@string/magicpvtName"
             android:textColor="@color/grey4GMV"
             android:textSize="50sp"
             android:textStyle="italic"
+            app:layout_constraintBottom_toTopOf="@+id/buttonConfiguration"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/titlePassport" />
 
@@ -48,14 +52,17 @@
             android:id="@+id/buttonConfiguration"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="100dp"
-            android:background="@color/redClearGMV"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="150dp"
+            style="@style/Button"
+            android:onClick="@{() -> welcomeViewModel.onButtonConfiguration()}"
             android:text="@string/configurationButton"
             android:textSize="30sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            android:onClick="@{() -> welcomeViewModel.onButtonConfiguration()}"/>
+            app:layout_constraintTop_toBottomOf="@+id/titleName" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

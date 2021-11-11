@@ -1,8 +1,16 @@
 package com.example.pvtcalculation
 
+import android.Manifest
 import android.app.Application
+import android.app.TaskStackBuilder.create
+import android.content.Context
+import android.content.pm.PackageManager
 import android.icu.text.Transliterator
+import android.location.LocationManager
+import android.location.LocationRequest
 import android.text.Editable
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -20,23 +28,23 @@ import com.example.pvtcalculation.base.NavigationCommand
 import com.example.pvtcalculation.positions.data.PositionDataSource
 import com.example.pvtcalculation.positions.data.dto.PositionDTO
 import kotlinx.coroutines.launch
+import java.net.URI.create
 import java.util.*
 
 
 class ConfigurationDownloadViewModel(val app: Application, val dataSource: PositionDataSource) :
     BaseViewModel(app) {
 
+
+
+
     private var _day = MutableLiveData<String>()
-    val day : LiveData<String>
-        get() = _day
-
     private var _month = MutableLiveData<String>()
-    val month : LiveData<String>
-        get() = _month
-
     private var _year = MutableLiveData<String>()
-    val year : LiveData<String>
-        get() = _year
+    private var _above = MutableLiveData<Above>()
+
+
+
 
     private var _date = MutableLiveData<String>()
     val date : LiveData<String>
@@ -57,6 +65,22 @@ class ConfigurationDownloadViewModel(val app: Application, val dataSource: Posit
     private var _buttonCompute = MutableLiveData<Boolean>()
     val buttonCompute : LiveData<Boolean>
         get() = _buttonCompute
+
+    private var _buttonSave = MutableLiveData<Boolean>()
+    val buttonSave : LiveData<Boolean>
+        get() = _buttonSave
+
+    private var _showSave = MutableLiveData<Boolean>()
+    val showSave : LiveData<Boolean>
+        get() = _showSave
+
+    private var _showDownload = MutableLiveData<Boolean>()
+    val showDownload : LiveData<Boolean>
+        get() = _showDownload
+
+    private var _buttonCurrentLocation = MutableLiveData<Boolean>()
+    val buttonCurrentLocation : LiveData<Boolean>
+        get() = _buttonCurrentLocation
 
 
 
@@ -79,10 +103,21 @@ class ConfigurationDownloadViewModel(val app: Application, val dataSource: Posit
      */
     init {
         _buttonCompute.value = false
+        _buttonCurrentLocation.value = false
+        _buttonSave.value = false
+
         _latitude.value = "41.702"
         _longitude.value = "-76.014"
         _altitude.value = "0"
+
+        _showSave.value = false
+        _showDownload.value = true
+
+        _response.value = ""
     }
+
+
+
 
 
     fun onButtonCompute(){
@@ -91,6 +126,22 @@ class ConfigurationDownloadViewModel(val app: Application, val dataSource: Posit
 
     fun onButtonComputeComplete(){
         _buttonCompute.value = false
+    }
+
+    fun onButtonSave(){
+        _buttonSave.value = true
+    }
+
+    fun onButtonSaveComplete(){
+        _buttonSave.value = false
+    }
+
+    fun onButtonCurrentLocation(){
+        _buttonCurrentLocation.value = true
+    }
+
+    fun onButtonCurrentLocationComplete(){
+        _buttonCurrentLocation.value = false
     }
 
     fun setLatitude(s: Editable){
@@ -119,7 +170,7 @@ class ConfigurationDownloadViewModel(val app: Application, val dataSource: Posit
      * Sets the value of the status LiveData to the Mars API status.
      */
     fun getSatellitess() {
-        _response.value = "Hola"
+        _response.value = "Loading..."
         try{
             GNSSApi.retrofitService.getAbove(latitude.value.toString(),
                                              longitude.value.toString(),
@@ -135,7 +186,7 @@ class ConfigurationDownloadViewModel(val app: Application, val dataSource: Posit
                     val info = JSONObject(response.body()!!).getJSONObject("info")
                     val satcount = info.getInt("satcount")
 
-                    val above = Above(UUID.randomUUID().toString(),date.value.toString(),satcount,latitude.value.toString(),longitude.value.toString(),altitude.value.toString())
+                    _above.value = Above(UUID.randomUUID().toString(),date.value.toString(),satcount,latitude.value.toString(),longitude.value.toString(),altitude.value.toString())
 
                     val aboveJSON = JSONObject(response.body()!!).getJSONArray("above")
                     for (i in 0 until aboveJSON.length()) {
@@ -159,41 +210,16 @@ class ConfigurationDownloadViewModel(val app: Application, val dataSource: Posit
                             satAlt)
                         satelliteList.add(satellite)
                     }
-                    _response.value = "Success: ${satcount} satellites for this location"
-                    validateAndSaveReminder(above)
+                    _response.value = "${satcount} satellites for this location"
+                    _showSave.value = true
+                    _showDownload.value = false
 
                 }
 
                 /**
                  * Validate the entered data then saves the reminder data to the DataSource
                  */
-                fun validateAndSaveReminder(reminderData: Above) {
-                    if (validateEnteredData(reminderData)) {
-                        savePosition(reminderData)
-                    }
-                }
 
-                /**
-                 * Save the reminder to the data source
-                 */
-                fun savePosition(positionData: Above) {
-                    showLoading.value = true
-                    viewModelScope.launch {
-                        dataSource.savePosition(
-                            PositionDTO(
-                                positionData.id,
-                                positionData.date,
-                                positionData.satcount,
-                                positionData.latitude,
-                                positionData.longitude,
-                                positionData.altitude
-                            )
-                        )
-                        showLoading.value = false
-                        showToast.value = app.getString(R.string.reminder_saved)
-                        navigationCommand.value = NavigationCommand.Back
-                    }
-                }
             })
         }catch (e: Exception){
             _response.value = "error"
@@ -201,6 +227,44 @@ class ConfigurationDownloadViewModel(val app: Application, val dataSource: Posit
 
 
 
+    }
+
+    fun validateAndSavePosition() {
+        _above.value?.let {
+            if (validateEnteredData(_above.value!!)) {
+                savePosition(_above.value!!)
+            }
+        }
+
+    }
+
+    /**
+     * Save the reminder to the data source
+     */
+    fun savePosition(positionData: Above) {
+        showLoading.value = true
+        viewModelScope.launch {
+            dataSource.savePosition(
+                PositionDTO(
+                    positionData.id,
+                    positionData.date,
+                    positionData.satcount,
+                    positionData.latitude,
+                    positionData.longitude,
+                    positionData.altitude
+                )
+            )
+            showLoading.value = false
+            showToast.value = app.getString(R.string.reminder_saved)
+            navigationCommand.value = NavigationCommand.Back
+            _buttonCompute.value = false
+            _latitude.value = "41.702"
+            _longitude.value = "-76.014"
+            _altitude.value = "0"
+            _showSave.value = false
+            _showDownload.value = true
+            _response.value = ""
+        }
     }
 
 
@@ -229,5 +293,15 @@ class ConfigurationDownloadViewModel(val app: Application, val dataSource: Posit
         }
         return true
     }
+
+
+    fun setLocation(lat: Double, lon:Double,alt:Double){
+        _latitude.value = lat.toString()
+        _longitude.value = lon.toString()
+        _altitude.value = alt.toString()
+    }
+
+
+
 
 }

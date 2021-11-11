@@ -52,7 +52,7 @@
     <fragment
         android:id="@+id/listPositionsFragment"
         android:name="com.example.pvtcalculation.positions.positionslist.ListPositionsFragment"
-        android:label="ListPositionsFragment" >
+        android:label="Saved positions" >
         <action
             android:id="@+id/action_listPositionsFragment_to_configurationDownloadFragment"
             app:destination="@id/configurationDownloadFragment" />

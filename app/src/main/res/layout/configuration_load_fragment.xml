@@ -43,7 +43,7 @@
             android:id="@+id/button"
             style="@style/Button"
             android:layout_marginBottom="100dp"
-            android:text="@string/buttonCompute"
+            android:text="@string/buttonDownload"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

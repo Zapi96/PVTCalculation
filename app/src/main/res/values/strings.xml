@@ -5,7 +5,10 @@
     <string name="configurationButton">CONFIGURATION</string>
     <string name="load_data">LOAD DATA</string>
     <string name="download_data">DOWNLOAD DATA</string>
-    <string name="buttonCompute">COMPUTE</string>
+    <string name="buttonDownload">DOWNLOAD</string>
+    <string name="buttonSave">SAVE</string>
+    <string name="buttonLocation">Select current location</string>
+
     <string name="observation_file_obs">Observation file (.obs):</string>
     <string name="navigation_file_nav">Navigation file (.nav):</string>
     <string name="select_date">Select date:</string>

@@ -5,7 +5,7 @@ import kotlinx.parcelize.Parcelize
 import java.io.Serializable
 import java.util.*
 
-data class Above(val id: String,
+data class Above(val id: String = UUID.randomUUID().toString(),
                  val date:String?,
                  val satcount:Int?,
                  val latitude:String?,

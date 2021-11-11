@@ -9,32 +9,45 @@
             type="com.example.pvtcalculation.ConfigurationViewModel"/>
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.constraintlayout.motion.widget.MotionLayout
+        android:id="@+id/constraintLayout7"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+
+        app:layoutDescription="@xml/configuration_fragment_xml_constraintlayout7_scene"
         tools:context=".ConfigurationFragment">
 
         <Button
             android:id="@+id/buttonLoad"
+            style="@style/Button"
+            android:onClick="@{() -> configurationViewModel.onButtonLoad()}"
             android:text="@string/load_data"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            style="@style/Button"
-            android:onClick="@{() -> configurationViewModel.onButtonLoad()}"
-            />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <Button
             android:id="@+id/buttonDownload"
             style="@style/Button"
             android:layout_marginTop="16dp"
+            android:onClick="@{() -> configurationViewModel.onButtonDownload()}"
             android:text="@string/download_data"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/buttonLoad"
-            android:onClick="@{() -> configurationViewModel.onButtonDownload()}"
-        />
+            app:layout_constraintTop_toBottomOf="@+id/buttonLoad" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <ImageView
+            android:id="@+id/imageSatellite"
+            android:layout_width="wrap_content"
+            android:layout_height="166dp"
+            android:layout_marginStart="117dp"
+            android:layout_marginTop="100dp"
+            android:layout_marginEnd="117dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+             />
+
+    </androidx.constraintlayout.motion.widget.MotionLayout>
 </layout>
