@@ -1,14 +1,8 @@
 package com.example.pvtcalculation
 
-//import androidx.lifecycle.ViewModelProvider
-//import android.os.Bundle
-//import android.text.InputType
-//import androidx.fragment.app.Fragment
-//import android.view.LayoutInflater
-//import android.view.View
-//import android.view.ViewGroup
-//import androidx.databinding.DataBindingUtil
+
 import android.Manifest
+import android.annotation.SuppressLint
 import android.annotation.TargetApi
 import com.example.pvtcalculation.databinding.ConfigurationDownloadFragmentBinding
 //import com.example.pvtcalculation.databinding.ConfigurationLoadFragmentBinding
@@ -68,7 +62,15 @@ class ConfigurationDownloadFragment : BaseFragment() {
     private var permissionsGranted = false
     private val LOG_TAG = "SentLocation"
 
+    private val runningQOrLater = android.os.Build.VERSION.SDK_INT >=
+            android.os.Build.VERSION_CODES.Q
+
     val PERMISSION_WRITE = 0
+
+    companion object {
+        //TODO: Add Constant for Location request
+        const val REQUEST_LOCATION_PERMISSION = 1
+    }
 
 
     @RequiresApi(Build.VERSION_CODES.N)
@@ -112,7 +114,7 @@ class ConfigurationDownloadFragment : BaseFragment() {
             dateAssigned = true
         }
 
-        checkPermissions()
+
 
         _viewModel.buttonCompute.observe(viewLifecycleOwner, Observer{button ->
             if (button){
@@ -135,9 +137,13 @@ class ConfigurationDownloadFragment : BaseFragment() {
         })
 
         _viewModel.buttonCurrentLocation.observe(viewLifecycleOwner, Observer{button ->
-            if (button && permissionsGranted){
+
+            if (button){
+//                checkPermissions()
                 _viewModel.onButtonCurrentLocationComplete()
+
                 getLocation()
+
             }
 
         })
@@ -147,77 +153,14 @@ class ConfigurationDownloadFragment : BaseFragment() {
     }
 
 
-    @RequiresApi(Build.VERSION_CODES.N)
-    private fun checkPermissions() {
-        val permissions = arrayListOf(
-            Manifest.permission.ACCESS_COARSE_LOCATION,
-            Manifest.permission.ACCESS_FINE_LOCATION,
-        )
-        // Segundo plano para Android Q
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            permissions.add(Manifest.permission.ACCESS_BACKGROUND_LOCATION)
-        }
-        val permissionsArray = permissions.toTypedArray()
-        if (hasPermissions(permissionsArray)) {
-            permissionsGranted = true
-            // Los permisos ya fueron concedidos
-        } else {
-            requestPerm(permissionsArray)
-        }
-    }
-
-    private fun hasPermissions(permissions: Array<String>): Boolean {
-        return permissions.all {
-            return ContextCompat.checkSelfPermission(
-                requireActivity(),
-                it
-            ) == PackageManager.PERMISSION_GRANTED
-        }
-    }
-
-    @RequiresApi(Build.VERSION_CODES.N)
-    private fun requestPerm(permissions: Array<String>) {
-
-//        requestPermissions(
-//            permissions,
-//            BACKGROUND_PERMISSIONS_CODE
-//        )
-        val locationPermissionRequest = registerForActivityResult(
-            ActivityResultContracts.RequestMultiplePermissions()
-        ) { permissions ->
-            when {
-                permissions.getOrDefault(Manifest.permission.ACCESS_FINE_LOCATION, false) -> {
-                    // Precise location access granted.
-                }
-                permissions.getOrDefault(Manifest.permission.ACCESS_COARSE_LOCATION, false) -> {
-                    // Only approximate location access granted.
-                } else -> {
-                // No location access granted.
-            }
-            }
-        }
 
 
-
-
-        locationPermissionRequest.launch(arrayOf(
-            Manifest.permission.ACCESS_FINE_LOCATION,
-            Manifest.permission.ACCESS_COARSE_LOCATION))
-    }
-
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        if (requestCode == BACKGROUND_PERMISSIONS_CODE) {
-            val allPermissionsGranted =
-                grantResults.all { it == PackageManager.PERMISSION_GRANTED }
-            if (grantResults.isNotEmpty() && allPermissionsGranted) {
-                permissionsGranted = true;
-                Log.d(LOG_TAG, "All permissions granted by the user")
-            } else {
-                Log.d(LOG_TAG, "One or more permissions where denied")
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        //TODO: Handle location permission result to get location on permission granted
+        if (requestCode == REQUEST_LOCATION_PERMISSION) {
+            if (grantResults.isNotEmpty() && (grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+                getLocation()
             }
         }
     }
@@ -230,42 +173,44 @@ class ConfigurationDownloadFragment : BaseFragment() {
         Log.d(LOG_TAG, "Latitud es ${location.latitude} y la longitud es ${location.longitude}")
     }
 
-    fun getLocation() {
-        // Hasta aquí sabemos que los permisos ya están concedidos
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(activity)
-        try {
-            fusedLocationClient.lastLocation.addOnSuccessListener {
-                if (it != null) {
-                    saveLocation(it)
-                } else {
-                    Log.d(LOG_TAG, "Location could not be obtained")
-                }
-            }
-            val locationRequest = LocationRequest.create().apply {
-                interval = 10000
-                fastestInterval = 5000
-                priority = LocationRequest.PRIORITY_HIGH_ACCURACY
-            }
-            locationCallback = object : LocationCallback() {
-                override fun onLocationResult(locationResult: LocationResult?) {
-                    locationResult ?: return
-                    Log.d(LOG_TAG, "Location update received")
-                    for (location in locationResult.locations) {
-                        saveLocation(location)
 
+    private fun checkLocationPermissions(): Boolean {
+        return if (isPermissionGranted()) {
+            true
+        } else {
+            //TODO: Request Location permissions
+            ActivityCompat.requestPermissions(
+                requireActivity(),
+                arrayOf<String>(Manifest.permission.ACCESS_FINE_LOCATION),
+                REQUEST_LOCATION_PERMISSION
+            )
+            false
+        }
+    }
+
+    private fun isPermissionGranted() : Boolean {
+        return ContextCompat.checkSelfPermission(
+            requireContext(),
+            Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+    }
+
+    @SuppressLint("MissingPermission")
+    private fun getLocation() {
+        if (checkLocationPermissions()) {
+            LocationServices.getFusedLocationProviderClient(requireContext())
+                .lastLocation.addOnSuccessListener { location ->
+                    if(location != null) {
+                        saveLocation(location)
+                    } else {
+                        Toast.makeText(requireActivity(), "Location needs to be enabled", Toast.LENGTH_SHORT).show()
                     }
                 }
-            }
-            fusedLocationClient.requestLocationUpdates(
-                locationRequest,
-                locationCallback,
-                Looper.getMainLooper()
-            )
-        } catch (e: SecurityException) {
-            Log.d(LOG_TAG, "Try to check your permissions")
         }
-
+        else {
+            requestPermissions(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), REQUEST_LOCATION_PERMISSION)
+        }
     }
+
 
 
 
