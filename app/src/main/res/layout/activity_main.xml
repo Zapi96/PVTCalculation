@@ -16,7 +16,7 @@
             android:layout_height="?attr/actionBarSize"
             android:background="@color/redClearGMV"
             app:titleTextColor="@color/whiteGMV"
-            android:elevation="4dp"
+            android:elevation="@dimen/elevation_toolbar"
             android:theme="@style/DrawerArrowStyle"
             app:popupTheme="@style/ThemeOverlay.AppCompat"/>
 

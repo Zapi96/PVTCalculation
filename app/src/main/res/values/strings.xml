@@ -12,7 +12,7 @@
     <string name="observation_file_obs">Observation file (.obs):</string>
     <string name="navigation_file_nav">Navigation file (.nav):</string>
     <string name="select_date">Select date:</string>
-    <string name="select_coordinates">Select coordinates</string>
+    <string name="select_coordinates">Select coordinates:</string>
     <string name="altitude">Altitude:</string>
     <string name="longitude">Longitude:</string>
     <string name="latitude">Latitude:</string>

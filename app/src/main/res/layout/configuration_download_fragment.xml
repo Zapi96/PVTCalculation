@@ -9,19 +9,6 @@
             type="com.example.pvtcalculation.ConfigurationDownloadViewModel"/>
     </data>
 
-<!--    <androidx.constraintlayout.widget.ConstraintLayout-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"-->
-<!--        >-->
-<!--    <TextView-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:text="@{downloadViewModel.response}"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintLeft_toLeftOf="parent"-->
-<!--        app:layout_constraintRight_toRightOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent"-->
-<!--        android:textColor="@color/blackGMV"/>-->
 
     <ScrollView
         android:layout_width="match_parent"
@@ -37,11 +24,11 @@
                 android:id="@+id/titleCoordinates"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="30dp"
-                android:layout_marginEnd="16dp"
+                android:layout_marginStart="@dimen/margin_normal"
+                android:layout_marginTop="@dimen/margin_large"
+                android:layout_marginEnd="@dimen/margin_normal"
                 android:text="@string/select_coordinates"
-                android:textSize="25sp"
+                android:textSize="@dimen/heading1_size"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -50,11 +37,11 @@
                 android:id="@+id/titleDate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="320dp"
-                android:layout_marginEnd="16dp"
+                android:layout_marginStart="@dimen/margin_normal"
+                android:layout_marginTop="@dimen/margin_titleDate"
+                android:layout_marginEnd="@dimen/margin_normal"
                 android:text="@string/select_date"
-                android:textSize="25sp"
+                android:textSize="@dimen/heading1_size"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -63,7 +50,7 @@
                 android:id="@+id/editTextDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="@dimen/margin_large"
                 android:ems="10"
                 android:focusable="false"
                 android:inputType="date"
@@ -75,41 +62,41 @@
                 android:id="@+id/buttonCompute"
                 style="@style/Button"
                 android:layout_width="wrap_content"
-                android:layout_height="53dp"
-                android:layout_marginTop="30dp"
-                android:layout_marginBottom="60dp"
+                android:layout_height="@dimen/margin_buttonCompute"
+                android:layout_marginTop="@dimen/margin_large"
+                android:layout_marginBottom="@dimen/margin_xxl"
                 android:fadeVisible="@{downloadViewModel.showDownload.booleanValue()}"
                 android:onClick="@{() -> downloadViewModel.onButtonCompute()}"
                 android:text="@string/buttonDownload"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView" />
+                app:layout_constraintTop_toBottomOf="@+id/response" />
 
             <Button
                 android:id="@+id/buttonSave"
                 style="@style/Button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:layout_marginBottom="60dp"
+                android:layout_marginTop="@dimen/margin_large"
+                android:layout_marginBottom="@dimen/margin_xxl"
                 android:fadeVisible="@{downloadViewModel.showSave.booleanValue()}"
                 android:onClick="@{() -> downloadViewModel.onButtonSave()}"
                 android:text="@string/buttonSave"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView" />
+                app:layout_constraintTop_toBottomOf="@+id/response" />
 
             <TextView
-                android:id="@+id/textView"
+                android:id="@+id/response"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="@dimen/margin_response"
                 android:gravity="center"
                 android:text="@{downloadViewModel.response}"
                 android:textColor="@color/redClearGMV"
-                android:textSize="25sp"
+                android:textSize="@dimen/heading1_size"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -119,10 +106,10 @@
                 android:id="@+id/titleLatitude"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginStart="@dimen/margin_content"
+                android:layout_marginTop="@dimen/margin_normal"
                 android:text="@string/latitude"
-                android:textSize="20sp"
+                android:textSize="@dimen/heading2_size"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/titleCoordinates" />
 
@@ -130,7 +117,7 @@
                 android:id="@+id/editTextLatitude"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
+                android:layout_marginStart="@dimen/margin_normal"
                 android:afterTextChanged="@{downloadViewModel::setLatitude}"
                 android:ems="10"
                 android:hint="@{downloadViewModel.latitude}"
@@ -142,10 +129,10 @@
                 android:id="@+id/titleLongitude"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="30dp"
+                android:layout_marginStart="@dimen/margin_content"
+                android:layout_marginTop="@dimen/margin_large"
                 android:text="@string/longitude"
-                android:textSize="20sp"
+                android:textSize="@dimen/heading2_size"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/titleLatitude" />
 
@@ -153,7 +140,7 @@
                 android:id="@+id/editTextLongitude"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
+                android:layout_marginStart="@dimen/margin_normal"
                 android:afterTextChanged="@{downloadViewModel::setLongitude}"
                 android:ems="10"
                 android:hint="@{downloadViewModel.longitude}"
@@ -165,10 +152,10 @@
                 android:id="@+id/titleAltitude"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="30dp"
+                android:layout_marginStart="@dimen/margin_content"
+                android:layout_marginTop="@dimen/margin_large"
                 android:text="@string/altitude"
-                android:textSize="20sp"
+                android:textSize="@dimen/heading2_size"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/titleLongitude" />
 
@@ -176,7 +163,7 @@
                 android:id="@+id/editTextAltitude"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
+                android:layout_marginStart="@dimen/margin_normal"
                 android:afterTextChanged="@{downloadViewModel::setAltitude}"
                 android:ems="10"
                 android:hint="@{downloadViewModel.altitude}"
@@ -189,11 +176,11 @@
                 style="@style/Button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="@dimen/margin_content"
                 android:backgroundTint="@color/grey3GMV"
                 android:onClick="@{() -> downloadViewModel.onButtonCurrentLocation()}"
                 android:text="@string/buttonLocation"
-                android:textSize="16sp"
+                android:textSize="@dimen/buttonCurrentLocation_textsize"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/editTextAltitude" />

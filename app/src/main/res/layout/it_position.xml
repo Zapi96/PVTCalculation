@@ -14,23 +14,23 @@
         android:id="@+id/rpositionCardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_margin="@dimen/margin_cardView"
         android:fadeVisible="@{true}">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="10dp">
+            android:padding="@dimen/padding">
 
             <TextView
                 android:id="@+id/title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginLeft="5dp"
+                android:layout_marginStart="@dimen/margin_small"
+                android:layout_marginLeft="@dimen/margin_small"
                 android:text="@{itemPosition.date}"
                 android:textColor="@color/blackGMV"
-                android:textSize="16sp"
+                android:textSize="@dimen/card_title_size"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="Title" />
 
@@ -39,7 +39,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@{@string/longitude_item(itemPosition.latitude)}"
-                android:textSize="14sp"
+                android:textSize="@dimen/card_content_size"
                 app:layout_constraintStart_toStartOf="@id/title"
                 app:layout_constraintTop_toBottomOf="@id/title"
                 tools:text="Latitude" />
@@ -49,7 +49,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@{@string/longitude_item(itemPosition.longitude)}"
-                android:textSize="14sp"
+                android:textSize="@dimen/card_content_size"
                 app:layout_constraintStart_toStartOf="@id/latitude"
                 app:layout_constraintTop_toBottomOf="@id/latitude"
                 tools:text="Longitude" />
@@ -59,7 +59,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@{@string/altitude_item(itemPosition.altitude)}"
-                android:textSize="14sp"
+                android:textSize="@dimen/card_content_size"
                 app:layout_constraintStart_toStartOf="@id/longitude"
                 app:layout_constraintTop_toBottomOf="@id/longitude"
                 tools:text="Altitude" />
@@ -69,7 +69,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="@{@string/satcount(itemPosition.satcount)}"
-                android:textSize="14sp"
+                android:textSize="@dimen/card_content_size"
                 app:layout_constraintBottom_toBottomOf="@+id/longitude"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/title"

@@ -30,7 +30,7 @@
         <Button
             android:id="@+id/buttonDownload"
             style="@style/Button"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="@dimen/margin_normal"
             android:onClick="@{() -> configurationViewModel.onButtonDownload()}"
             android:text="@string/download_data"
             app:layout_constraintEnd_toEndOf="parent"
@@ -40,10 +40,10 @@
         <ImageView
             android:id="@+id/imageSatellite"
             android:layout_width="wrap_content"
-            android:layout_height="166dp"
-            android:layout_marginStart="117dp"
-            android:layout_marginTop="100dp"
-            android:layout_marginEnd="117dp"
+            android:layout_height="@dimen/height_image"
+            android:layout_marginStart="@dimen/marginStart_image"
+            android:layout_marginTop="@dimen/marginTop_image"
+            android:layout_marginEnd="@dimen/marginEnd_image"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
